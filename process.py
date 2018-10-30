@@ -79,6 +79,7 @@ for i in dopplers:
                 count-=1
                 pop+=1
         dop_diff = [(y[j] - z[j]) for j in range(len(y))]
+        los_speed =[3.6*(a - y[index])*(299792458.0)/1575420000 for index, a in enumerate(z)]
         plt.subplot(211)
         plt.title('SAT_' + str(i))
         #print(i, x[0],_time[0],len(x),len(_time))
@@ -100,7 +101,8 @@ for i in dopplers:
         plt.xlabel('Time (sec)')
         plt.ylabel('Doppler (Hz)')
         plt.subplot(212)
-        plt.plot(tm,df,'b-')
+        #plt.plot(tm,df,'b-')
+        plt.plot(x,los_speed,'b-')
         plt.xlabel('Time (sec)')
         plt.ylabel('Speed Km/h')
         plt.savefig('satellite_' + str(i) +'.png')
