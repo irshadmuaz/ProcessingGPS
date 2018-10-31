@@ -92,11 +92,10 @@ for i in dopplers:
                 if(b>=x[0] and b <= x[-1]):
                     tm.append(b)
                     df.append(difference[a])
-        else:
-            continue;
+
         #tdiff = tm[0] - x[0]
         #tm = [z - tdiff for z in tm]
-        print(i, x[0],tm[0],len(x),len(tm))
+        #print(i, x[0],tm[0],len(x),len(tm))
         plt.plot(x,y,'r-',x,z,'b-')
         plt.xlabel('Time (sec)')
         plt.ylabel('Doppler (Hz)')
