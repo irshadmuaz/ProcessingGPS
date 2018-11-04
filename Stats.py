@@ -9,7 +9,7 @@ if len(sys.argv) < 2:
     print('USAGE: <csv-file>')
     exit(-1)
 file = sys.argv[1]
-speeds = [5,10,15,20,25,30]
+speeds = [x for x in range(3,11)]
 output = open('status.csv','wb')
 writer = csv.writer(output,delimiter=',')
 
@@ -26,11 +26,15 @@ for limit in speeds:
         count=0
         passes = 0
         for e in data.loc[1:,c]:
-            s,speed =e.split(':')
-            if float(speed) <= limit:
+            #s,mean,mode,speed =e.split(':')
+            s,speed = e.split(':')
+            #if math.floor(float(speed)) == math.floor(limit):
+	    #if float(speed) <= limit:
+	    if float(speed) >= limit-1 and float(speed) <= limit:
                 count+=1
                 if s == '1':
                     passes+=1
         #row.append(str(passes) + "/" + str(count))
-        row.append(float(passes)/count*100)
+	if count > 0:
+        	row.append(str(float(passes)/count*100) + ' : ' + str(passes) + "/" + str(count))
     writer.writerow(row)
