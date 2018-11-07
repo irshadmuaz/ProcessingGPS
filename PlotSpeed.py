@@ -27,14 +27,13 @@ def extract(filename):
 def velocities():
     vel,t = extract(sys.argv[1])
     vel2,t2 = extract(sys.argv[2])
-    print('extracted_speeds', len(vel),len(vel2))
+    
 
-    Dt2 = {x:index for index,x in enumerate(t2)}
-    spoofed_velocity = []
-    actual_velocity = []
+    #spoofed_velocity = []
+    #actual_velocity = []
     t_actual = []
     diff= t[0] - t2[0]
-    trim_index = 0
+    """trim_index = 0
     while vel2[trim_index] == 0:
         trim_index+=1
     t2 = t2[trim_index:]
@@ -43,9 +42,17 @@ def velocities():
     spoofed_velocity = vel2[trim_index:]
     t_actual = t2
     #print(len(spoofed_velocity),len(actual_velocity))
-    print('velocities',len(vel),len(vel2),t[-1] - t[0] ,t[1] - t2[1], t[0] - t2[0])
-
-    plt.plot(t_actual,actual_velocity,'r-',t_actual,spoofed_velocity,'b-')
+    print('velocities',len(vel),len(vel2),t[-1] - t[0] ,t[1] - t2[1], t[0] - t2[0])"""
+    if len(vel2) < len(vel):
+        vel = vel[(len(vel) - len(vel2)):]
+        t = t[(len(t) - len(t2)):]
+    elif len(vel) < len(vel2):
+        vel2 = vel2[(len(vel2) - len(vel)):]
+        t2 = t2[(len(t2) - len(t)):]
+    #print('extracted_speeds', len(actual_velocity),len(spoofed_velocity))
+    actual_velocity = vel
+    spoofed_velocity = vel2
+    plt.plot(t2,actual_velocity,'r-',t2,spoofed_velocity,'b-')
     difference = [(spoofed_velocity[i] - actual_velocity[i]) for i in range(len(actual_velocity))]
     # print(difference)
     # plt.plot(t_actual,difference,'b-')
@@ -54,4 +61,4 @@ def velocities():
     #plt.legend(['actual speed','spoofer_speed'])
     plt.legend(['speed difference'])
     plt.show()
-    return t_actual,difference
+    return t2,difference

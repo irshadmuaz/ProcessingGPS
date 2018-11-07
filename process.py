@@ -23,36 +23,27 @@ class doppler:
         self.velocity = 0
         self.measured = 0
         self.calculated = 0
+        self.diff = 0
 file = open('range_data.log_doppler')
 vel = velocity()
 pos = velocity()
 dop = doppler()
 lines = file.readlines()
 dopplers = {i:[] for i in range(40)}
+_dops = {i:{} for i in range(40)}
 for line in lines[1:]:
     pieces = line.split(' ')
     pieces = [x for x in pieces if x != '']
-# =============================================================================
-#     if pieces[0] == 'Velocity':
-#         vel = velocity()
-#         vel.x = float(pieces[2])
-#         vel.y = float(pieces[3])
-#         vel.z = float(pieces[4])
-#
-#     elif pieces[0] == 'Position':
-#         pos.x = float(pieces[2])
-#         pos.y = float(pieces[3])
-#         pos.z = float(pieces[4])
-#     elif pieces[0] == 'Doppler':
-# =============================================================================
     dop = doppler()
     dop.time = float(pieces[10])
     dop.measured = float(pieces[2])
     dop.calculated = float(pieces[3])
     dop.prn = int(pieces[0])
+    dop.diff = dop.measured - dop.calculated
     dopplers[int(pieces[0])].append(dop)
-
+    _dops[dop.prn][dop.time] = dop
 _time,difference = speed.velocities()
+dict_time = {_time[x]:difference[x] for x in range(len(_time))}
 print("Showing  speed difference")
 plt.plot(_time,difference,'b-')
 plt.show()
